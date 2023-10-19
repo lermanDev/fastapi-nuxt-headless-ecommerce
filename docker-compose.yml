@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  front:
+    image: node:16-alpine
+    environment:
+      NUXT_HOST: 0.0.0.0
+      NUXT_PORT: 3000
+    working_dir: /app
+    volumes:
+      - ./front:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    command: sh -c "yarn dev"
+    networks:
+      - app-network
+  api:
+    command: "poetry run uvicorn app.main:app --host 0.0.0.0 --port 3001"
+    build:
+      context: .
+      dockerfile: FastAPI.Dockerfile
+    volumes:
+      - ./api:/app
+    ports:
+      - "3001:3001"
+    networks:
+      - app-network
+
+networks:
+  app-network:
