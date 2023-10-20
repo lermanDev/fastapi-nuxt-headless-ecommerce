@@ -1,25 +1,20 @@
 <script setup>
-    const route = useRoute()
-
-    const lang = route.params.lang
-    const manufacturer = route.params.manufacturer
-    const link_rewrite = route.params.name
 
     const product_endpoint = 'http://api:3001'
-    const { data } = await useFetch(product_endpoint)
+    const { data:product, error:err, status:patata } = await useFetch(product_endpoint)
 
-    console.log(data)
+    console.log(product.value, err.value, patata.value)
 
-    const product_obj = JSON.parse(data)
+    /* const product_obj = JSON.parse(data.value)
 
     if (data["error"])
-        throw createError({ statusCode: 404, statusMessage: data["error"] })
+        throw createError({ statusCode: 404, statusMessage: data["error"] })*/
 </script>
 <template>
     <div class="container">
-        <div class="col">
+        <!--div class="col">
           <div>{{data}}</div>
-        </div>
+        </div-->
     </div>
 </template>
 <style scoped>
